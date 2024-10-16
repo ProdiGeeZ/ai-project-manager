@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const OpenAI = require('openai');
 const app = express();
-const port = 5000;
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
@@ -34,6 +33,4 @@ app.get('/project-advice', async (req, res) => {
     res.json({ advice });
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+module.exports = app;
