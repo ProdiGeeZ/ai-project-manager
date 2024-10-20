@@ -2,8 +2,7 @@ const db = require('../connection');
 
 const seed = () => {
     return db
-        .query(`DROP TABLE IF EXISTS task_history;`)
-        .then(() => db.query(`DROP TABLE IF EXISTS tickets;`))
+        .query(`DROP TABLE IF EXISTS tickets;`)
         .then(() => db.query(`DROP TABLE IF EXISTS projects;`))
         .then(() => {
             return db.query(`
