@@ -27,10 +27,10 @@ const seedDev = () => {
             ('user2@example.com', 'password2');
         `))
         .then(() => {
-            console.log('Development database seeded successfully');
+            console.log('local database seeded successfully');
         })
         .catch((error) => {
-            console.error('Error seeding development database:', error);
+            console.error('Error seeding local database:', error);
         });
 };
 

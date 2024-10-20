@@ -1,12 +1,14 @@
 const express = require('express');
-const projectRoutes = require('./routes/projectRoutes');
 const errorHandler = require('./middleware/errorHandler');
+const { createProject, fetchProjectAdvice } = require('./controllers/projects.controller');
 
 const app = express();
 
 app.use(express.json());
 
-app.use('/projects', projectRoutes);
+app.post('/api/projects', createProject);
+
+app.post('/api/project-advice', fetchProjectAdvice);
 
 app.use(errorHandler);
 
