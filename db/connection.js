@@ -1,24 +1,26 @@
-const { Pool } = require('pg');
+const { Pool } = require("pg");
 
-const ENV = process.env.NODE_ENV || 'development';
+const ENV = process.env.NODE_ENV || "development";
 
-require('dotenv').config({
+require("dotenv").config({
     path: `${__dirname}/../.env.${ENV}`,
 });
 
-if (!process.env.PGDATABASE) {
-    throw new Error('PGDATABASE not set');
+if (ENV === "production" && !process.env.DATABASE_URL) {
+    throw new Error("Environment variable DATABASE_URL is required in production environment");
 }
 
-const config = {};
+const poolConfig = {};
 
-if (ENV === 'production') {
-    config.connectionString = process.env.PGDATABASE; 
-    config.ssl = { rejectUnauthorized: false };
-    config.max = 10;
+if (ENV === "production") {
+    poolConfig.connectionString = process.env.DATABASE_URL;
+    poolConfig.ssl = {
+        rejectUnauthorized: false,
+    };
+    poolConfig.max = 20;
 } else {
-    config.connectionString = process.env.PGDATABASE; 
-    config.max = ENV === 'test' ? 5 : 10; 
+    poolConfig.database = process.env.PGDATABASE;
 }
 
-module.exports = new Pool(config);
+
+module.exports = new Pool(poolConfig);
