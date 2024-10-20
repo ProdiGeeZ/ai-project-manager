@@ -1,6 +1,7 @@
+const { createNewProject } = require('../models/projects.model');
 const { getProjectAdvice } = require('../services/openaiService');
 
-const fetchProjectAdvice = async (req, res, next) => {
+exports.fetchProjectAdvice = async (req, res, next) => {
     try {
         const { prompt } = req.body;
         const advice = await getProjectAdvice(prompt);
@@ -10,4 +11,11 @@ const fetchProjectAdvice = async (req, res, next) => {
     }
 };
 
-module.exports = { fetchProjectAdvice };
+exports.createProject = (req, res, next) => {
+    const { user_id, name, description } = req.body;
+    createNewProject(user_id, name, description)
+        .then((newProject) => {
+            res.status(201).json({ project: newProject });
+        })
+        .catch(next); 
+};
